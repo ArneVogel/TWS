@@ -1,0 +1,207 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.1
+-- Dumped by pg_dump version 10.1
+
+-- Started on 2018-01-09 22:17:59
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12924)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2819 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 196 (class 1259 OID 17212)
+-- Name: partner; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE partner (
+    id bigint NOT NULL,
+    name text,
+    language text,
+    view_count bigint,
+    follower_count bigint,
+    display_name text
+);
+
+
+ALTER TABLE partner OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 17228)
+-- Name: subscription; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE subscription (
+    id text NOT NULL,
+    sub_plan text,
+    month integer,
+    p_id bigint NOT NULL,
+    u_id bigint NOT NULL,
+    msg text,
+    date date
+);
+
+
+ALTER TABLE subscription OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 17220)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE users (
+    id bigint NOT NULL,
+    name text,
+    display_name text
+);
+
+
+ALTER TABLE users OWNER TO postgres;
+
+--
+-- TOC entry 2810 (class 0 OID 17212)
+-- Dependencies: 196
+-- Data for Name: partner; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY partner (id, name, language, view_count, follower_count, display_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2812 (class 0 OID 17228)
+-- Dependencies: 198
+-- Data for Name: subscription; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY subscription (id, sub_plan, month, p_id, u_id, msg, date) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2811 (class 0 OID 17220)
+-- Dependencies: 197
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (id, name, display_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2684 (class 2606 OID 17235)
+-- Name: subscription id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subscription
+    ADD CONSTRAINT id PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2680 (class 2606 OID 17219)
+-- Name: partner partner_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY partner
+    ADD CONSTRAINT partner_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2686 (class 2606 OID 17259)
+-- Name: subscription unique_sub; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subscription
+    ADD CONSTRAINT unique_sub UNIQUE (p_id, u_id, date);
+
+
+--
+-- TOC entry 2682 (class 2606 OID 17227)
+-- Name: users user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2687 (class 2606 OID 17248)
+-- Name: subscription partner_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subscription
+    ADD CONSTRAINT partner_id FOREIGN KEY (p_id) REFERENCES partner(id);
+
+
+--
+-- TOC entry 2688 (class 2606 OID 17253)
+-- Name: subscription user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY subscription
+    ADD CONSTRAINT user_id FOREIGN KEY (u_id) REFERENCES users(id);
+
+
+--
+-- TOC entry 2820 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: partner; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,UPDATE ON TABLE partner TO tws;
+
+
+--
+-- TOC entry 2821 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: subscription; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,UPDATE ON TABLE subscription TO tws;
+
+
+--
+-- TOC entry 2822 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: users; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,UPDATE ON TABLE users TO tws;
+
+
+-- Completed on 2018-01-09 22:17:59
+
+--
+-- PostgreSQL database dump complete
+--
+
