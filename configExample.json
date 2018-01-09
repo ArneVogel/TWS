@@ -1,0 +1,8 @@
+{
+  "DB_USER": "tws",
+  "DB_PASSWORD": "",
+  "DN_NAME": "tws",
+  "JOIN_PER_MINUTE_LIMIT": 100,
+  "VIEWER_LIMIT": 100,
+  "CLIENT_ID": ""
+}
