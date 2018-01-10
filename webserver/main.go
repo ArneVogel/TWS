@@ -272,7 +272,12 @@ var streamer = {
         fields: {
             link: "website-link"
         }
-    }
+    },
+	list: {
+		match: {
+			enabled: true
+		}
+	}
 };
 
 $("#streamer").easyAutocomplete(streamer);
