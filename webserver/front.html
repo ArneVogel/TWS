@@ -1,0 +1,40 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.js"></script> 
+
+<title>{{.Title}}</title>
+<meta name="description" content="{{.Description}}">
+{{.Javascript}}
+</head>
+<body>
+<nav class="blue">
+<div class="container">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo left">TWSLogs</a>
+      <ul id="nav-mobile" class="right">
+        <li><a href="/user">Top Users</a></li>
+        <li><a href="/streamer">Top Streamer</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+
+<h1>{{.Title}}</h1>
+<div>{{.Body}}</div>
+
+<h2>Streamer</h2>
+<input id="streamer" />
+<h2>User</h2>
+<input id="user" />
+
+{{.JsonData2}}
+
+</div>
+
+
+
+</body>

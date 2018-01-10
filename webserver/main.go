@@ -17,7 +17,9 @@ type Page struct {
 	Description string
 	Body  template.HTML
 	Nav template.HTML
+	Javascript template.HTML
 }
+
 
 // can be set with -config and -debug
 var configFile string
@@ -227,14 +229,81 @@ func topStreamerHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "view", &page)
 }
 
+func getNames(rows *sql.Rows) []string {
+	var names []string
+	for rows.Next() {
+		var name string
+		err := rows.Scan(&name)
+		if err != nil {
+			fmt.Println("error in getPartnersNames: ", err)
+			return nil
+		}
+		names = append(names, name)
+	}
+	return names
+}
+
+func createAutocompleteJson(names []string, linkTo string) string {
+	result := ""
+	for _, name := range names {
+		result += fmt.Sprintf(`{"text": "%s", "website-link": "/%s/%s"},`, name, linkTo, name)
+	}
+	return result
+}
+
 func frontHandler(w http.ResponseWriter, r *http.Request) {
 	var page Page
-	page.Title = "hi"
+	page.Title = "Subscription Data"
 	
-	renderTemplate(w, "view", &page)
+	page.Javascript = `<script>
+jQuery( document ).ready(function($) {
+
+var streamer = {
+    data: [
+        `
+	page.Javascript += template.HTML(createAutocompleteJson(getNames(dbReader("SELECT name FROM partner")), "streamer"))
+	page.Javascript += `
+    ],
+
+    getValue: "text",
+
+    template: {
+        type: "links",
+        fields: {
+            link: "website-link"
+        }
+    }
+};
+
+var user = {
+    data: [
+        `
+	page.Javascript += template.HTML(createAutocompleteJson(getNames(dbReader("SELECT name FROM users")), "user"))
+	
+	page.Javascript += `
+    ],
+
+    getValue: "text",
+
+    template: {
+        type: "links",
+        fields: {
+            link: "website-link"
+        }
+    }
+};
+
+$("#streamer").easyAutocomplete(streamer);
+$("#user").easyAutocomplete(user);
+   
+});
+
+</script>`
+	
+	page.Description = "Subscription Data from Twitch"
+	renderTemplate(w, "front", &page)
   
-  
-  
+	
   
 }
 
