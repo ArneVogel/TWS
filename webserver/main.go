@@ -275,26 +275,7 @@ var streamer = {
     }
 };
 
-var user = {
-    data: [
-        `
-	page.Javascript += template.HTML(createAutocompleteJson(getNames(dbReader("SELECT name FROM users")), "user"))
-	
-	page.Javascript += `
-    ],
-
-    getValue: "text",
-
-    template: {
-        type: "links",
-        fields: {
-            link: "website-link"
-        }
-    }
-};
-
 $("#streamer").easyAutocomplete(streamer);
-$("#user").easyAutocomplete(user);
    
 });
 
