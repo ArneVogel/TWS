@@ -240,9 +240,9 @@ func frontHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	rtr := mux.NewRouter()
-	rtr.HandleFunc("/streamer/{name:[a-z0-9]+}/{month:[a-z0-9-]+}", streamerMonthHandler)
-	rtr.HandleFunc("/streamer/{name:[a-z0-9]+}", streamerProfileHandler)
-	rtr.HandleFunc("/user/{name:[a-z0-9]+}", userHandler)
+	rtr.HandleFunc("/streamer/{name:[a-z0-9_]+}/{month:[a-z0-9-]+}", streamerMonthHandler)
+	rtr.HandleFunc("/streamer/{name:[a-z0-9_]+}", streamerProfileHandler)
+	rtr.HandleFunc("/user/{name:[a-z0-9_]+}", userHandler)
 	rtr.HandleFunc("/streamer", topStreamerHandler)
 	rtr.HandleFunc("/user", topUserHandler)
 	rtr.HandleFunc("/", frontHandler)
