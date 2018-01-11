@@ -24,6 +24,8 @@ var DB_NAME string
 var DB_PASSWORD string
 var joinLimit time.Duration
 var joinLimitInt int
+var OAUTH string
+var TWITCHNAME string
 
 func dbWriter(query string, args ...string) {
 	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
@@ -106,8 +108,8 @@ func listener(stream string) {
 		defunct = append(defunct, stream)
 		return
 	}
-	conn.Write([]byte("PASS " + "oauth:rdx4jdrurv49ot8s01ph3jeu20ux90" + "\r\n"))
-	conn.Write([]byte("NICK " + "anon0323" + "\r\n"))
+	conn.Write([]byte("PASS " + OAUTH + "\r\n"))
+	conn.Write([]byte("NICK " + TWITCHNAME + "\r\n"))
 	conn.Write([]byte("JOIN " + "#" + stream + "\r\n"))
 	conn.Write([]byte("CAP REQ :twitch.tv/commands\r\n"))
 	conn.Write([]byte("CAP REQ :twitch.tv/tags\r\n"))
@@ -227,6 +229,14 @@ func init() {
 	err = c.Get("DB_PASSWORD", &DB_PASSWORD)
 	if err != nil && debug {
 		fmt.Println("Couldn't get DB_PASSWORD from config file: ", configFile)
+	}
+	err = c.Get("OAUTH", &OAUTH)
+	if err != nil && debug {
+		fmt.Println("Couldn't get OAUTH from config file: ", configFile)
+	}
+	err = c.Get("TWITCHNAME", &TWITCHNAME)
+	if err != nil && debug {
+		fmt.Println("Couldn't get TWITCHNAME from config file: ", configFile)
 	}
 	err = c.Get("JOIN_PER_MINUTE_LIMIT", &joinLimitInt)
 	joinLimit = time.Duration(joinLimitInt)

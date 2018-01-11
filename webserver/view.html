@@ -4,6 +4,20 @@
 <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
 <title>{{.Title}}</title>
 <meta name="description" content="{{.Description}}">
+<style>
+
+    body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+
+    </style>
+
 </head>
 <body>
 <nav class="blue">
@@ -18,9 +32,26 @@
   </div>
 </nav>
 {{ .Nav }}
-<div class="container">
+<main class="container">
 
 <h1>{{.Title}}</h1>
 <div>{{.Body}}</div>
-</div>
+</main>
+
+<footer class="page-footer blue">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">TWSLogs</h5>
+                <p class="grey-text text-lighten-4">Logging subscriptions on twitch.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">More</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://github.com/arnevogel/tws">Github</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
 </body>
