@@ -26,9 +26,9 @@ var configFile string
 var debug bool
 
 // Loaded from config.json
-var DB_USER string = "tws"
-var DB_NAME string = "tws"
-var DB_PASSWORD string = "tws"
+var DB_USER string
+var DB_NAME string
+var DB_PASSWORD string
 
 func dbReader(query string) *sql.Rows {
 	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
